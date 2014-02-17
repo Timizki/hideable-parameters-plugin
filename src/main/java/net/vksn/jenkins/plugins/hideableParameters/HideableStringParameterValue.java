@@ -1,4 +1,4 @@
-package net.vksn.jenkins.plugins.hideable;
+package net.vksn.jenkins.plugins.hideableParameters;
 
 import hudson.model.StringParameterValue;
 import org.kohsuke.stapler.DataBoundConstructor;

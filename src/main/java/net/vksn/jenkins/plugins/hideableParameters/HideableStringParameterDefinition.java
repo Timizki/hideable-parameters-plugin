@@ -1,13 +1,10 @@
-package net.vksn.jenkins.plugins.hideable;
+package net.vksn.jenkins.plugins.hideableParameters;
 
 import hudson.Extension;
 import hudson.model.ParameterValue;
 import hudson.model.StringParameterDefinition;
 import net.sf.json.JSONObject;
-import net.sf.json.util.JSONBuilder;
-import org.jvnet.solaris.libzfs.jna.vdev_aux_t;
 import org.kohsuke.stapler.DataBoundConstructor;
-import org.kohsuke.stapler.DataBoundSetter;
 import org.kohsuke.stapler.StaplerRequest;
 
 /**
