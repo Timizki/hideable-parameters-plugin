@@ -1,36 +1,22 @@
 package net.vksn.jenkins.plugins.hideableParameters;
 
 import hudson.Extension;
-import hudson.model.*;
+import hudson.model.BooleanParameterDefinition;
+import hudson.model.ParameterValue;
 import net.sf.json.JSONObject;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.StaplerRequest;
-
-import java.util.logging.Logger;
 
 /**
  * Created by timii on 2/3/14.
  */
-public class HideableBooleanParameterDefinition extends SimpleParameterDefinition {
-    private final static Logger log = Logger.getLogger(HideableBooleanParameterDefinition.class.getName());
-
-    private final boolean hidden;
-    private final boolean defaultValue;
+public class HideableBooleanParameterDefinition extends BooleanParameterDefinition {
+     private final boolean hidden;
 
     @DataBoundConstructor
     public HideableBooleanParameterDefinition(String name, boolean defaultValue, String description, boolean hidden) {
-        super(name,description);
-        this.defaultValue = defaultValue;
+        super(name, defaultValue, description);
         this.hidden = hidden;
-        log.severe(
-                String.format(
-                        "Creating new %S value=%S, hidden=%S",
-                        HideableBooleanParameterDefinition.class.getName(), new Boolean(this.defaultValue), new Boolean(this.hidden)
-                )
-        );
     }
 
     public HideableBooleanParameterDefinition(BooleanParameterDefinition definition, boolean hidden) {
@@ -46,15 +32,13 @@ public class HideableBooleanParameterDefinition extends SimpleParameterDefinitio
 
     @Override
     public ParameterValue createValue(String value) {
-        log.severe("creating HideableBooleanParameterValue with value "+value);
         return new HideableBooleanParameterValue(getName(), Boolean.valueOf(value), getDescription(), hidden);
     }
 
 
     @Override
-    public ParameterValue getDefaultParameterValue() {
-        log.severe("returning HideableBooleanParameters default value with value " + defaultValue);
-        return new HideableBooleanParameterValue(getName(),this.defaultValue, getDescription(), hidden);
+    public HideableBooleanParameterValue getDefaultParameterValue() {
+        return new HideableBooleanParameterValue(super.getDefaultParameterValue(), hidden);
     }
 
     @Extension
@@ -71,7 +55,7 @@ public class HideableBooleanParameterDefinition extends SimpleParameterDefinitio
     }
 
     public boolean isDefaultValue() {
-        return defaultValue;
+        return super.isDefaultValue();
     }
 
     public boolean isHidden() {
